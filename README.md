@@ -1,4 +1,4 @@
-# Ian Ochieng Developer Blog
+# Ian Ochieng Blog
 
 A personal developer blog and portfolio website built with HTML.
 
