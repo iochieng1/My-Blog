@@ -1,118 +1,70 @@
-# Ian Ochieng Blog
+# Ian Ochieng — Portfolio
 
-A personal developer blog and portfolio website built with HTML.
+The personal portfolio site of **Ian Ochieng**, a full-stack and backend developer in Kisumu, Kenya, and an apprentice at **Zone01 Kisumu**.
 
-This website serves as my online space to document my software development journey, share technical insights, showcase projects, and connect with other developers.
+**Live site:** https://iochieng1.github.io/My-Blog/
 
-## About Me
+It's a single static page: no build step, framework or JavaScript. It's hosted on GitHub Pages from the `main` branch.
 
-Hello! I'm **Ian Ochieng**, a software developer based in Kenya and an apprentice at **Zone01 Kisumu**.
+## What's on the site
 
-I enjoy building practical software solutions and continuously learning new technologies. My primary interests include:
+- **About** — background and the kind of work I do
+- **Stack** — languages, frameworks, infrastructure and tools
+- **Experience** — freelance client work and the Zone01 Kisumu apprenticeship
+- **Projects** — case studies and other work:
+  - **SemaKazi** — a skills-verification and reputation platform for informal-sector workers (Node.js, Express, SQLite) · [source](https://github.com/iochieng1/SemaKazi)
+  - **Duka POS** — point of sale and inventory for small shops (Node.js, Express, EJS, SQLite) · [source](https://github.com/iochieng1/duka-pos)
+  - **Duka Ledger** — installment-payment tracking for shop owners (private client work)
+  - **Ben's Tailoring Platform** — website and backend for a Qatar-based tailoring business (client work)
+  - **DawaTrace** — a blockchain pharmaceutical-verification prototype (Solidity, Hardhat)
+  - **Flexi-Ride** — a team-built ride-hailing platform (Go, SQL)
+- **Education** and **Contact**
 
-* Go (Golang)
-* Linux
-* Docker
-* Web Development
-* Databases
-* APIs
-* Bitcoin & Lightning Network Technologies
-
-## Purpose of This Blog
-
-The goal of this blog is to:
-
-* Document my learning journey
-* Share project experiences
-* Publish technical articles
-* Showcase personal and collaborative projects
-* Connect with developers and technology enthusiasts
-
-## Featured Projects
-
-### DawaTrace
-
-A blockchain-powered pharmaceutical verification platform designed to improve medicine traceability and combat counterfeit drugs.
-
-### SkyFee
-
-A Lightning Network-powered school fee payment system enabling fast and affordable digital transactions.
-
-### ASCII Art Web
-
-A Go web application that converts user text into ASCII art using different banner styles.
-
-## Planned Blog Topics
-
-* Go Programming
-* Linux Tips and Workflows
-* Docker and Containerization
-* Web Development
-* Databases
-* Bitcoin Development
-* Hackathon Experiences
-* Open Source Contributions
-* Software Engineering Lessons
-
-## Technologies Used
-
-* HTML5
-* Git
-* GitHub
-
-Future versions may include:
-
-* CSS3
-* JavaScript
-* Responsive Design
-* Dark Mode
-* Blog Post System
-
-## Repository Structure
+## Repository structure
 
 ```text
 .
-├── index.html
-├── README.md
-└── assets/
+├── index.html              # the whole site
+├── style.css               # design tokens, layout, print styles
+├── favicon.svg
+├── 404.html                # GitHub Pages "not found" page
+├── robots.txt
+├── sitemap.xml
+├── .nojekyll               # serve files as-is, skip Jekyll
+└── .htmlvalidate.json      # HTML lint rules
 ```
 
-## Getting Started
-
-Clone the repository:
+## Running locally
 
 ```bash
-git clone https://github.com/iochieng1/blog.git
+git clone https://github.com/iochieng1/My-Blog.git
+cd My-Blog
+python3 -m http.server 8000
 ```
 
-Open the project:
+Then open http://localhost:8000. You can also open `index.html` directly in a browser, but `404.html` uses absolute `/My-Blog/` paths, so it only renders correctly when served from GitHub Pages.
+
+## Checking the HTML
+
+To catch broken markup, such as unclosed tags, run:
 
 ```bash
-cd blog
+npx html-validate index.html 404.html
 ```
 
-Launch the website by opening:
+## Accessibility
 
-```text
-index.html
-```
+- Text colours meet WCAG AA contrast (4.5:1) against the dark background.
+- There's a skip link, labelled navigation and visible focus outlines.
+- Links that open in a new tab say so to screen readers.
+- Animation is disabled when the visitor prefers reduced motion.
 
-in your browser.
+## Contact
 
-## Connect With Me
+- Email: ochieng1044@gmail.com
+- GitHub: https://github.com/iochieng1
+- LinkedIn: https://www.linkedin.com/in/ian-ochieng/
 
-GitHub: https://github.com/iochieng1
+## License
 
-LinkedIn: https://www.linkedin.com/in/ian-ochieng
-
-Email: ochieng1044@gmail.com
-
-## Current Status
-
-🚀 Active Development
-
-This project will continue evolving as I learn new technologies and build more projects.
-
----
-
-*"Every expert was once a beginner who refused to quit."*
+[MIT](LICENSE)
