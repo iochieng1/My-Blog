@@ -31,9 +31,7 @@ It's a single static page: no build step, framework or JavaScript. It's hosted o
 ├── robots.txt
 ├── sitemap.xml
 ├── .nojekyll               # serve files as-is, skip Jekyll
-├── .htmlvalidate.json      # HTML lint rules
-└── .github/workflows/
-    └── check.yml           # HTML validation + link check on every push and PR
+└── .htmlvalidate.json      # HTML lint rules
 ```
 
 ## Running locally
@@ -46,14 +44,9 @@ python3 -m http.server 8000
 
 Then open http://localhost:8000. You can also open `index.html` directly in a browser, but `404.html` uses absolute `/My-Blog/` paths, so it only renders correctly when served from GitHub Pages.
 
-## Checks
+## Checking the HTML
 
-Every push and pull request runs:
-
-- **html-validate** — catches broken markup, such as unclosed tags
-- **lychee** — catches dead links (LinkedIn is skipped because it blocks automated requests)
-
-To run the HTML check locally:
+To catch broken markup, such as unclosed tags, run:
 
 ```bash
 npx html-validate index.html 404.html
