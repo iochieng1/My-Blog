@@ -4,18 +4,53 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ian Ochieng — Full-Stack &amp; Backend Developer</title>
+<meta name="description" content="Ian Ochieng is a full-stack and backend developer in Kisumu, Kenya, building Node.js, Go and SQL systems for small businesses and freelance clients.">
+<meta name="author" content="Ian Ochieng">
+<meta name="theme-color" content="#15191d">
+<link rel="canonical" href="https://iochieng1.github.io/My-Blog/">
+
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Ian Ochieng">
+<meta property="og:title" content="Ian Ochieng — Full-Stack &amp; Backend Developer">
+<meta property="og:description" content="Backend systems, business platforms and verification tools, built in Kisumu, Kenya. Node.js, Go, SQL, Docker.">
+<meta property="og:url" content="https://iochieng1.github.io/My-Blog/">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ian Ochieng — Full-Stack &amp; Backend Developer">
+<meta name="twitter:description" content="Backend systems, business platforms and verification tools, built in Kisumu, Kenya.">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Ian Ochieng",
+  "jobTitle": "Full-Stack & Backend Developer",
+  "url": "https://iochieng1.github.io/My-Blog/",
+  "email": "mailto:ochieng1044@gmail.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Kisumu", "addressCountry": "KE" },
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of Nairobi" },
+  "sameAs": [
+    "https://github.com/iochieng1",
+    "https://www.linkedin.com/in/ian-ochieng/"
+  ]
+}
+</script>
 </head>
 <body>
+
+<a class="skip-link" href="#top">Skip to content</a>
 
 <div class="frame">
 
   <aside class="rail">
-    <a class="rail-mark" href="#top">IO</a>
-    <nav class="rail-nav">
+    <a class="rail-mark" href="#top" aria-label="Ian Ochieng — back to top">IO</a>
+    <nav class="rail-nav" aria-label="Sections">
       <a href="#about"><span>About</span></a>
       <a href="#stack"><span>Stack</span></a>
       <a href="#work"><span>Experience</span></a>
@@ -26,7 +61,7 @@
     <div class="rail-foot">Kisumu, Kenya</div>
   </aside>
 
-  <main id="top">
+  <main id="top" tabindex="-1">
 
     <header class="hero">
       <p class="hero-kicker">Full-Stack &amp; Backend Developer</p>
@@ -57,9 +92,9 @@
       </dl>
 
       <div class="hero-links">
-        <a href="mailto:ochieng1044@gmail.com">ochieng1044@gmail.com</a>
-        <a href="https://github.com/iochieng1" target="_blank" rel="noopener">github.com/iochieng1</a>
-        <a href ="https://linkedin.com/in/ian-ochieng">https://linkedin.com/in/ian-ochieng</a>
+        <a href="mailto:ochieng1044@gmail.com">Email</a>
+        <a href="https://github.com/iochieng1" target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+        <a href="https://www.linkedin.com/in/ian-ochieng/" target="_blank" rel="noopener noreferrer">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
       </div>
     </header>
 
@@ -128,13 +163,19 @@
           <h3>Freelance Software Developer</h3>
           <span class="entry-date">Ongoing</span>
         </div>
+        <p class="entry-kind">Self-employed · Client work</p>
         <p>
           Delivering web applications, business websites, and backend
           systems for independent clients — from requirements gathering
-          through to production deployment. Recent work spans customer
-          payment tracking, e-commerce-adjacent platforms, and
-          automation for small operators.
+          through to production deployment.
         </p>
+        <ul class="entry-points">
+          <li>Built Duka Ledger, an installment-payment tracker for small
+            shop owners (Node.js, Express, SQLite).</li>
+          <li>Built the production website, SEO and backend services for
+            Ben's Tailoring, a Qatar-based tailoring business, as sole
+            developer.</li>
+        </ul>
       </article>
 
       <article class="entry">
@@ -142,39 +183,116 @@
           <h3>Software Development Apprentice, Zone01 Kisumu</h3>
           <span class="entry-date">Mar 2026 — Present</span>
         </div>
+        <p class="entry-kind">Apprenticeship · Training programme, not employment</p>
         <p>
           Peer-driven, project-based apprenticeship building depth in
           backend systems, software architecture, algorithms,
-          collaborative git workflows, and DevOps fundamentals —
-          alongside hackathon and team-built products.
+          collaborative git workflows, and DevOps fundamentals.
         </p>
+        <ul class="entry-points">
+          <li>Built DawaTrace, a pharmaceutical verification prototype on
+            Solidity smart contracts, at a Zone01 hackathon.</li>
+          <li>Backend contributor on Flexi-Ride, a team-built
+            ride-hailing platform in Go.</li>
+          <li>Wrote <a href="https://github.com/iochieng1/go-reloaded" target="_blank" rel="noopener noreferrer">go-reloaded<span class="sr-only"> (opens in a new tab)</span></a>,
+            a Go command-line text-transformation pipeline.</li>
+        </ul>
       </article>
     </section>
 
     <section id="projects" class="block">
       <h2>Projects</h2>
 
-      <article class="case">
+      <article class="case case-featured">
         <div class="case-head">
-          <h3>Duka Ledger</h3>
-          <span class="case-code">Client build</span>
+          <h3>SemaKazi</h3>
+          <span class="case-code">Personal project · Sole developer</span>
         </div>
-        <p>A customer installment-payment tracking platform for small
-          shop owners, built to feel like the ledger books it replaces —
-          customer records, payment history, and dashboards on Node.js,
-          Express, and SQLite.</p>
-        <p class="case-stack">Node.js · Express · SQLite</p>
+        <p>A skills-verification and reputation platform for Kenya's
+          informal-sector workers (fundis), who usually have no way to
+          prove their competence beyond word of mouth.</p>
+        <dl class="case-detail">
+          <div>
+            <dt>Problem</dt>
+            <dd>Clients can't tell a skilled fundi from someone posing as
+              one, so good workers stay limited to their existing network.</dd>
+          </div>
+          <div>
+            <dt>Approach</dt>
+            <dd>Public profiles built from three trust signals: photo
+              proof of completed jobs, client ratings, and peer-endorsed
+              skill badges. Search by trade and location.</dd>
+          </div>
+          <div>
+            <dt>Key decision</dt>
+            <dd>Scoped a deliberate MVP in a written PRD and left
+              payments, escrow and chat out, so the trust model could be
+              built and tested first.</dd>
+          </div>
+          <div>
+            <dt>Status</dt>
+            <dd>Registration, login, search, profiles with reviews, and
+              the fundi dashboard work end to end. Production deployment
+              is in progress.</dd>
+          </div>
+        </dl>
+        <p class="case-stack">Node.js · Express · SQLite · JWT + bcrypt · HTML/CSS/JS</p>
+        <p class="case-links">
+          <a href="https://github.com/iochieng1/SemaKazi" target="_blank" rel="noopener noreferrer">Source<span class="sr-only"> code for SemaKazi (opens in a new tab)</span></a>
+          <a href="https://iochieng1.github.io/SemaKazi/" target="_blank" rel="noopener noreferrer">Frontend preview<span class="sr-only"> of SemaKazi (opens in a new tab)</span></a>
+        </p>
       </article>
+
+      <article class="case case-featured">
+        <div class="case-head">
+          <h3>Duka POS</h3>
+          <span class="case-code">Personal project · Sole developer</span>
+        </div>
+        <p>Point-of-sale and inventory software for small Kenyan shops,
+          designed to run on a single machine with no cloud dependency.</p>
+        <dl class="case-detail">
+          <div>
+            <dt>Problem</dt>
+            <dd>Small shops need sales, stock and staff control without
+              paying for hosted POS systems or reliable internet.</dd>
+          </div>
+          <div>
+            <dt>Approach</dt>
+            <dd>Owner and cashier roles with bcrypt-hashed PINs, camera
+              barcode scanning, printable receipts, low-stock alerts, a
+              7-day CSV report, an English/Swahili toggle, and
+              multi-shop support.</dd>
+          </div>
+          <div>
+            <dt>Key decision</dt>
+            <dd>Stock deduction runs atomically at checkout so two
+              cashiers can't oversell the last item, and every row is
+              scoped by shop so one owner can run several shops.</dd>
+          </div>
+          <div>
+            <dt>Verification</dt>
+            <dd>A 20-test suite runs against an in-memory SQLite
+              database.</dd>
+          </div>
+        </dl>
+        <p class="case-stack">Node.js · Express · EJS · SQLite</p>
+        <p class="case-links">
+          <a href="https://github.com/iochieng1/duka-pos" target="_blank" rel="noopener noreferrer">Source<span class="sr-only"> code for Duka POS (opens in a new tab)</span></a>
+        </p>
+      </article>
+
+      <h3 class="subhead">Other work</h3>
 
       <article class="case">
         <div class="case-head">
-          <h3>DawaTrace</h3>
-          <span class="case-code">Zone01 hackathon</span>
+          <h3>Duka Ledger</h3>
+          <span class="case-code">Client build · Private</span>
         </div>
-        <p>A blockchain-based pharmaceutical verification platform built
-          to combat counterfeit medicines, using smart contracts to give
-          each product a checkable chain of custody.</p>
-        <p class="case-stack">Solidity · Hardhat · Node.js</p>
+        <p>A customer installment-payment tracking platform for small
+          shop owners, built to feel like the ledger books it replaces —
+          customer records, payment history, and dashboards.</p>
+        <p class="case-stack">Node.js · Express · SQLite</p>
+        <p class="case-note">Client work — code and live system are not public.</p>
       </article>
 
       <article class="case">
@@ -190,13 +308,13 @@
 
       <article class="case">
         <div class="case-head">
-          <h3>SemaKazi</h3>
-          <span class="case-code">Portfolio build</span>
+          <h3>DawaTrace</h3>
+          <span class="case-code">Zone01 hackathon</span>
         </div>
-        <p>A skills-verification and reputation platform for Kenya's
-          informal-sector workers (fundis) — letting them document and
-          prove real work history to build trust with new clients.</p>
-        <p class="case-stack">Node.js · SQL</p>
+        <p>A blockchain-based pharmaceutical verification prototype
+          built to combat counterfeit medicines, using smart contracts to
+          give each product a checkable chain of custody.</p>
+        <p class="case-stack">Solidity · Hardhat · Node.js</p>
       </article>
 
       <article class="case">
@@ -209,6 +327,10 @@
           Kisumu team.</p>
         <p class="case-stack">Go · SQL</p>
       </article>
+
+      <p class="more-link">
+        More on <a href="https://github.com/iochieng1?tab=repositories" target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+      </p>
     </section>
 
     <section id="education" class="block">
@@ -216,16 +338,17 @@
 
       <article class="entry">
         <div class="entry-head">
-          <h3>Software Development Apprenticeship</h3>
-          <span class="entry-date">Zone01 Kisumu — 2026, Present</span>
+          <h3>B.A. Public Administration, major in Sociology</h3>
+          <span class="entry-date">University of Nairobi</span>
         </div>
       </article>
 
       <article class="entry">
         <div class="entry-head">
-          <h3>B.A. Public Administration, major in Sociology</h3>
-          <span class="entry-date">University of Nairobi</span>
+          <h3>Software Development Apprenticeship</h3>
+          <span class="entry-date">Zone01 Kisumu · Mar 2026 — Present</span>
         </div>
+        <p>See <a href="#work">Experience</a> for the projects completed so far.</p>
       </article>
     </section>
 
@@ -242,11 +365,11 @@
         </div>
         <div class="ledger-row">
           <dt>GitHub</dt>
-          <dd><a href="https://github.com/iochieng1" target="_blank" rel="noopener">github.com/iochieng1</a></dd>
+          <dd><a href="https://github.com/iochieng1" target="_blank" rel="noopener noreferrer">github.com/iochieng1<span class="sr-only"> (opens in a new tab)</span></a></dd>
         </div>
         <div class="ledger-row">
-          <dt>linkedin</dt>
-          <dd><a href="https://linkedin.com/in/ian-ochieng">https://linkedin.com/in/ian-ochieng</a></dd>
+          <dt>LinkedIn</dt>
+          <dd><a href="https://www.linkedin.com/in/ian-ochieng/" target="_blank" rel="noopener noreferrer">linkedin.com/in/ian-ochieng<span class="sr-only"> (opens in a new tab)</span></a></dd>
         </div>
         <div class="ledger-row">
           <dt>Based in</dt>
@@ -261,4 +384,3 @@
 
 </body>
 </html>
-
