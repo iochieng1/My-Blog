@@ -15,6 +15,8 @@
 <meta property="og:description" content="Backend systems, business platforms and verification tools, built in Kisumu, Kenya. Node.js, Go, SQL, Docker.">
 <meta property="og:url" content="https://iochieng1.github.io/My-Blog/">
 <meta property="og:locale" content="en_GB">
+<meta property="og:image" content="https://iochieng1.github.io/My-Blog/img/ian-ochieng.jpg">
+<meta property="og:image:alt" content="Portrait of Ian Ochieng">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ian Ochieng — Full-Stack &amp; Backend Developer">
 <meta name="twitter:description" content="Backend systems, business platforms and verification tools, built in Kisumu, Kenya.">
@@ -32,12 +34,14 @@
   "name": "Ian Ochieng",
   "jobTitle": "Full-Stack & Backend Developer",
   "url": "https://iochieng1.github.io/My-Blog/",
+  "image": "https://iochieng1.github.io/My-Blog/img/ian-ochieng.jpg",
   "email": "mailto:ochieng1044@gmail.com",
   "address": { "@type": "PostalAddress", "addressLocality": "Kisumu", "addressCountry": "KE" },
   "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of Nairobi" },
   "sameAs": [
     "https://github.com/iochieng1",
-    "https://www.linkedin.com/in/ian-ochieng/"
+    "https://www.linkedin.com/in/ian-ochieng/",
+    "https://dev.to/iochieng1"
   ]
 }
 </script>
@@ -55,8 +59,11 @@
       <a href="#stack"><span>Stack</span></a>
       <a href="#work"><span>Experience</span></a>
       <a href="#projects"><span>Projects</span></a>
+      <a href="#articles"><span>Articles</span></a>
+      <a href="#hobbies"><span>Hobbies</span></a>
       <a href="#education"><span>Education</span></a>
       <a href="#contact"><span>Contact</span></a>
+      <a class="rail-cta" href="resume.html"><span>Resume</span></a>
     </nav>
     <div class="rail-foot">Kisumu, Kenya</div>
   </aside>
@@ -64,8 +71,13 @@
   <main id="top" tabindex="-1">
 
     <header class="hero">
-      <p class="hero-kicker">Full-Stack &amp; Backend Developer</p>
-      <h1>Ian Ochieng builds software<br>that keeps a straight record.</h1>
+      <div class="hero-top">
+        <div class="hero-intro">
+          <p class="hero-kicker">Full-Stack &amp; Backend Developer</p>
+          <h1>Ian Ochieng builds software<br>that keeps a straight record.</h1>
+        </div>
+        <img class="portrait" src="img/ian-ochieng.jpg" width="400" height="400" alt="Ian Ochieng, smiling, outdoors under a tree">
+      </div>
       <p class="hero-lede">
         I design and ship backend systems, business platforms, and
         verification tools — for freelance clients and, currently,
@@ -92,9 +104,13 @@
       </dl>
 
       <div class="hero-links">
+        <a class="hero-cta" href="resume.html">Resume</a>
         <a href="mailto:ochieng1044@gmail.com">Email</a>
-        <a href="https://github.com/iochieng1" target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only"> (opens in a new tab)</span></a>
         <a href="https://www.linkedin.com/in/ian-ochieng/" target="_blank" rel="noopener noreferrer">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+        <a href="https://github.com/iochieng1" target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+        <a href="https://dev.to/iochieng1" target="_blank" rel="noopener noreferrer">Dev.to<span class="sr-only"> (opens in a new tab)</span></a>
+        <!-- TODO: replace YOUR_HANDLE with your X handle -->
+        <a href="https://x.com/YOUR_HANDLE" target="_blank" rel="noopener noreferrer">X<span class="sr-only"> (opens in a new tab)</span></a>
       </div>
     </header>
 
@@ -123,6 +139,7 @@
           <ul>
             <li>Go</li>
             <li>JavaScript</li>
+            <li>Java</li>
             <li>Solidity</li>
             <li>SQL</li>
             <li>HTML5 / CSS3</li>
@@ -133,7 +150,9 @@
           <ul>
             <li>Node.js</li>
             <li>Express.js</li>
+            <li>Spring Boot</li>
             <li>React</li>
+            <li>React Native / Expo</li>
           </ul>
         </div>
         <div class="stack-group">
@@ -142,6 +161,7 @@
             <li>Docker</li>
             <li>Linux</li>
             <li>GitHub Actions</li>
+            <li>Prometheus &amp; Grafana</li>
             <li>SQLite</li>
           </ul>
         </div>
@@ -149,6 +169,7 @@
           <h3>Other tools</h3>
           <ul>
             <li>Git &amp; GitHub</li>
+            <li>gRPC &amp; OpenAPI</li>
             <li>Hardhat</li>
           </ul>
         </div>
@@ -193,7 +214,8 @@
           <li>Built DawaTrace, a pharmaceutical verification prototype on
             Solidity smart contracts, at a Zone01 hackathon.</li>
           <li>Backend contributor on Flexi-Ride, a team-built
-            ride-hailing platform in Go.</li>
+            ride-hailing platform of Java/Spring Boot microservices:
+            Docker builds, gRPC contracts, observability and monitoring.</li>
           <li>Wrote <a href="https://github.com/iochieng1/go-reloaded" target="_blank" rel="noopener noreferrer">go-reloaded<span class="sr-only"> (opens in a new tab)</span></a>,
             a Go command-line text-transformation pipeline.</li>
         </ul>
@@ -202,6 +224,8 @@
 
     <section id="projects" class="block">
       <h2>Projects</h2>
+
+      <h3 class="subhead" id="personal-projects">Personal projects</h3>
 
       <article class="case case-featured">
         <div class="case-head">
@@ -281,7 +305,113 @@
         </p>
       </article>
 
-      <h3 class="subhead">Other work</h3>
+      <article class="case case-featured">
+        <div class="case-head">
+          <h3>AuraRisk</h3>
+          <span class="case-code">Personal project · Sole developer</span>
+        </div>
+        <p>A climate-risk platform that gives communities localised flood
+          risk, early warnings and community disaster reports, on the web
+          and on mobile.</p>
+        <dl class="case-detail">
+          <div>
+            <dt>Problem</dt>
+            <dd>People in flood-prone areas need local, timely warnings,
+              not just a regional forecast.</dd>
+          </div>
+          <div>
+            <dt>Approach</dt>
+            <dd>A Go API scores flood risk from Open-Meteo rainfall, soil
+              moisture and weather codes, and serves community reports. A
+              React web map and an Expo mobile app share one TypeScript
+              client.</dd>
+          </div>
+          <div>
+            <dt>Key decision</dt>
+            <dd>Weather is cached per ~2&nbsp;km grid cell with a
+              stale-data fallback, and alerts are never sent from stale
+              data. The score is labelled as a heuristic, with confidence
+              capped at medium until it's calibrated.</dd>
+          </div>
+          <div>
+            <dt>Status</dt>
+            <dd>Pilot stage: not yet a safety-critical warning system.
+              Security and reliability hardening is merged. Calibrating the
+              risk model is next.</dd>
+          </div>
+        </dl>
+        <p class="case-stack">Go · Gin · PostgreSQL · React · MapLibre GL · Expo / React Native · TypeScript · Prometheus</p>
+        <p class="case-links">
+          <a href="https://github.com/iochieng1/Aura-Risk" target="_blank" rel="noopener noreferrer">Source<span class="sr-only"> code for AuraRisk (opens in a new tab)</span></a>
+          <a href="#engineering-notes">Engineering notes</a>
+        </p>
+      </article>
+
+      <h3 class="subhead" id="internal-projects">Internal projects · Zone01 Kisumu</h3>
+      <p class="subhead-note">Built inside the apprenticeship, mostly in teams. The code
+        lives on Zone01's private Git server unless a link is given.</p>
+
+      <article class="case">
+        <div class="case-head">
+          <h3>Flexi-Ride</h3>
+          <span class="case-code">Team project · Backend</span>
+        </div>
+        <p>A ride-hailing and flexible-transport platform for East Africa,
+          built by a team as 13 microservices and 2 gateways. I worked on
+          Docker builds, service contracts, observability and monitoring.</p>
+        <p class="case-stack">Java · Spring Boot · gRPC · Docker · Prometheus · Grafana</p>
+      </article>
+
+      <article class="case">
+        <div class="case-head">
+          <h3>DawaTrace</h3>
+          <span class="case-code">Hackathon</span>
+        </div>
+        <p>A blockchain-based pharmaceutical verification prototype
+          built to combat counterfeit medicines, using smart contracts to
+          give each product a checkable chain of custody.</p>
+        <p class="case-stack">Solidity · Hardhat · Node.js</p>
+      </article>
+
+      <article class="case">
+        <div class="case-head">
+          <h3>Clonernews</h3>
+          <span class="case-code">Pair project</span>
+        </div>
+        <p>A fast reader for the Hacker News API, with no framework.
+          Stories, jobs and polls load newest first with infinite scroll and
+          nested comments. A live panel polls for updates every five seconds.
+          Requests are cached and deduplicated, and retry with exponential
+          backoff.</p>
+        <p class="case-stack">JavaScript · HTML · CSS</p>
+      </article>
+
+      <article class="case">
+        <div class="case-head">
+          <h3>Sortable</h3>
+          <span class="case-code">Team project</span>
+        </div>
+        <p>A searchable, paginated table of superhero data with
+          unit-aware sorting, so 78&nbsp;kg sorts below 100&nbsp;kg.
+          Missing values always sort last. Written in plain ES modules.</p>
+        <p class="case-stack">JavaScript · HTML · CSS</p>
+      </article>
+
+      <article class="case">
+        <div class="case-head">
+          <h3>go-reloaded</h3>
+          <span class="case-code">Solo project</span>
+        </div>
+        <p>A command-line text tool. It converts hex and binary numbers,
+          changes case, and fixes punctuation, quotes and articles, all in
+          one sequential pipeline.</p>
+        <p class="case-stack">Go</p>
+        <p class="case-links">
+          <a href="https://github.com/iochieng1/go-reloaded" target="_blank" rel="noopener noreferrer">Source<span class="sr-only"> code for go-reloaded (opens in a new tab)</span></a>
+        </p>
+      </article>
+
+      <h3 class="subhead" id="client-work">Client work</h3>
 
       <article class="case">
         <div class="case-head">
@@ -306,31 +436,154 @@
         <p class="case-stack">JavaScript · Node.js</p>
       </article>
 
-      <article class="case">
-        <div class="case-head">
-          <h3>DawaTrace</h3>
-          <span class="case-code">Zone01 hackathon</span>
-        </div>
-        <p>A blockchain-based pharmaceutical verification prototype
-          built to combat counterfeit medicines, using smart contracts to
-          give each product a checkable chain of custody.</p>
-        <p class="case-stack">Solidity · Hardhat · Node.js</p>
-      </article>
-
-      <article class="case">
-        <div class="case-head">
-          <h3>Flexi-Ride</h3>
-          <span class="case-code">Zone01 team project</span>
-        </div>
-        <p>Backend contributor on a ride-hailing and flexible
-          transportation platform, built collaboratively with a Zone01
-          Kisumu team.</p>
-        <p class="case-stack">Go · SQL</p>
-      </article>
-
       <p class="more-link">
         More on <a href="https://github.com/iochieng1?tab=repositories" target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only"> (opens in a new tab)</span></a>
       </p>
+    </section>
+
+    <section id="articles" class="block">
+      <h2>Articles</h2>
+      <p class="block-lede">I write about what I build and the problems I hit
+        along the way. Engineering notes are write-ups of real issues I've
+        worked on, from the problem through to how I checked the fix.</p>
+
+      <h3 class="subhead" id="engineering-notes">Engineering notes</h3>
+      <ol class="article-list">
+        <li class="article">
+          <time class="article-date" datetime="2026-10-08">8 Oct 2026</time>
+          <div>
+            <a class="article-title" href="articles/aurarisk-weather-resilience.html">Keeping flood risk lookups up when the weather API isn't</a>
+            <p class="article-meta">AuraRisk · Go · Resilience · APIs</p>
+          </div>
+        </li>
+        <li class="article">
+          <time class="article-date" datetime="2026-10-08">8 Oct 2026</time>
+          <div>
+            <a class="article-title" href="articles/aurarisk-api-hardening.html">Hardening the AuraRisk API</a>
+            <p class="article-meta">AuraRisk · Go · API · Reliability</p>
+          </div>
+        </li>
+        <li class="article">
+          <time class="article-date" datetime="2026-10-08">8 Oct 2026</time>
+          <div>
+            <a class="article-title" href="articles/aurarisk-map-popup-xss.html">Fixing stored XSS in AuraRisk's map popups</a>
+            <p class="article-meta">AuraRisk · Web · Security · Dependencies</p>
+          </div>
+        </li>
+        <li class="article">
+          <time class="article-date" datetime="2026-10-06">6 Oct 2026</time>
+          <div>
+            <a class="article-title" href="articles/flexiride-prometheus-grafana.html">Prometheus alerts with unit tests</a>
+            <p class="article-meta">Flexi-Ride · Prometheus · Grafana · Alerting</p>
+          </div>
+        </li>
+        <li class="article">
+          <time class="article-date" datetime="2026-10-06">6 Oct 2026</time>
+          <div>
+            <a class="article-title" href="articles/semakazi-production-audit.html">Auditing my own MVP before production</a>
+            <p class="article-meta">SemaKazi · Node · Security · Audit</p>
+          </div>
+        </li>
+        <li class="article">
+          <time class="article-date" datetime="2026-10-06">6 Oct 2026</time>
+          <div>
+            <a class="article-title" href="articles/clonernews-vanilla-rewrite.html">Rebuilding Clonernews without React</a>
+            <p class="article-meta">Clonernews · JavaScript · Performance · Refactor</p>
+          </div>
+        </li>
+        <li class="article">
+          <time class="article-date" datetime="2026-10-05">5 Oct 2026</time>
+          <div>
+            <a class="article-title" href="articles/flexiride-actuator-security.html">Locking down Spring Boot Actuator</a>
+            <p class="article-meta">Flexi-Ride · Spring Boot · Security · Observability</p>
+          </div>
+        </li>
+        <li class="article">
+          <time class="article-date" datetime="2026-10-05">5 Oct 2026</time>
+          <div>
+            <a class="article-title" href="articles/aurarisk-fail-fast-config.html">Removing default credentials and failing fast</a>
+            <p class="article-meta">AuraRisk · Go · Security · Config</p>
+          </div>
+        </li>
+        <li class="article">
+          <time class="article-date" datetime="2026-09-16">16 Sep 2026</time>
+          <div>
+            <a class="article-title" href="articles/flexiride-ports-healthchecks.html">One port per job</a>
+            <p class="article-meta">Flexi-Ride · Docker Compose · gRPC · Config</p>
+          </div>
+        </li>
+        <li class="article">
+          <time class="article-date" datetime="2026-08-13">13 Aug 2026</time>
+          <div>
+            <a class="article-title" href="articles/flexiride-contract-first.html">Writing the contract first</a>
+            <p class="article-meta">Flexi-Ride · gRPC · OpenAPI · API design</p>
+          </div>
+        </li>
+      </ol>
+
+      <h3 class="subhead" id="devto-posts">On Dev.to</h3>
+      <ol class="article-list">
+        <li class="article">
+          <time class="article-date" datetime="2026-09-22">22 Sep 2026</time>
+          <div>
+            <a class="article-title" href="https://dev.to/iochieng1/debugging-expo-fixing-node-v18-incompatibilities-and-network-etimedout-errors-on-linux-1j57" target="_blank" rel="noopener noreferrer">Debugging Expo: Fixing Node v18 Incompatibilities and Network ETIMEDOUT Errors on Linux<span class="sr-only"> (Dev.to, opens in a new tab)</span></a>
+            <p class="article-meta">React Native · Expo · Debugging · 3 min</p>
+          </div>
+        </li>
+        <li class="article">
+          <time class="article-date" datetime="2026-08-03">3 Aug 2026</time>
+          <div>
+            <a class="article-title" href="https://dev.to/iochieng1/-building-semakazi-part-3-adding-tests-and-why-i-had-to-refactor-first-2pne" target="_blank" rel="noopener noreferrer">Building SemaKazi Part 3: Adding Tests (and Why I Had to Refactor First)<span class="sr-only"> (Dev.to, opens in a new tab)</span></a>
+            <p class="article-meta">Node · Testing · Refactoring · 2 min</p>
+          </div>
+        </li>
+        <li class="article">
+          <time class="article-date" datetime="2026-08-01">1 Aug 2026</time>
+          <div>
+            <a class="article-title" href="https://dev.to/iochieng1/-building-semakazi-part-2-starting-the-frontend-no-framework-required-2j02" target="_blank" rel="noopener noreferrer">Building SemaKazi Part 2: Starting the Frontend, No Framework Required<span class="sr-only"> (Dev.to, opens in a new tab)</span></a>
+            <p class="article-meta">Web dev · Node · Open source · 2 min</p>
+          </div>
+        </li>
+        <li class="article">
+          <time class="article-date" datetime="2026-07-31">31 Jul 2026</time>
+          <div>
+            <a class="article-title" href="https://dev.to/iochieng1/building-semakazi-part-1-shipping-a-backend-the-way-real-teams-do-it-32da" target="_blank" rel="noopener noreferrer">Building SemaKazi Part 1: Shipping a Backend the Way Real Teams Do It<span class="sr-only"> (Dev.to, opens in a new tab)</span></a>
+            <p class="article-meta">Web dev · Node · GitHub · 2 min</p>
+          </div>
+        </li>
+        <li class="article">
+          <time class="article-date" datetime="2026-07-30">30 Jul 2026</time>
+          <div>
+            <a class="article-title" href="https://dev.to/iochieng1/how-i-tamed-legacy-docker-v129-for-multi-stage-microservice-builds-596c" target="_blank" rel="noopener noreferrer">How I Tamed Legacy Docker (v1.29) for Multi-Stage Microservice Builds<span class="sr-only"> (Dev.to, opens in a new tab)</span></a>
+            <p class="article-meta">Docker · DevOps · Microservices · 2 min</p>
+          </div>
+        </li>
+      </ol>
+      <p class="more-link">
+        All posts on <a href="https://dev.to/iochieng1" target="_blank" rel="noopener noreferrer">Dev.to<span class="sr-only"> (opens in a new tab)</span></a>
+      </p>
+    </section>
+
+    <section id="hobbies" class="block">
+      <h2>Hobbies</h2>
+      <ul class="hobby-list">
+        <li>
+          <h3>Technical writing</h3>
+          <p>Writing up what I build and the bugs I fix, on Dev.to and in the notes above.</p>
+        </li>
+        <li>
+          <h3>Open source</h3>
+          <p>Keeping my own projects public and learning from other people's code and reviews.</p>
+        </li>
+        <li>
+          <h3>Hackathons</h3>
+          <p>Building a working prototype against the clock, like DawaTrace at a Zone01 hackathon.</p>
+        </li>
+        <li>
+          <h3>Everyday tools</h3>
+          <p>Making small apps for my own routines, like TaskLedger for tasks, study, money and fitness.</p>
+        </li>
+      </ul>
     </section>
 
     <section id="education" class="block">
@@ -370,6 +623,19 @@
         <div class="ledger-row">
           <dt>LinkedIn</dt>
           <dd><a href="https://www.linkedin.com/in/ian-ochieng/" target="_blank" rel="noopener noreferrer">linkedin.com/in/ian-ochieng<span class="sr-only"> (opens in a new tab)</span></a></dd>
+        </div>
+        <div class="ledger-row">
+          <dt>Dev.to</dt>
+          <dd><a href="https://dev.to/iochieng1" target="_blank" rel="noopener noreferrer">dev.to/iochieng1<span class="sr-only"> (opens in a new tab)</span></a></dd>
+        </div>
+        <div class="ledger-row">
+          <dt>X</dt>
+          <!-- TODO: replace YOUR_HANDLE with your X handle -->
+          <dd><a href="https://x.com/YOUR_HANDLE" target="_blank" rel="noopener noreferrer">x.com/YOUR_HANDLE<span class="sr-only"> (opens in a new tab)</span></a></dd>
+        </div>
+        <div class="ledger-row">
+          <dt>Resume</dt>
+          <dd><a href="resume.html">View or download as PDF</a></dd>
         </div>
         <div class="ledger-row">
           <dt>Based in</dt>

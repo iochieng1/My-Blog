@@ -2,6 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://iochieng1.github.io/My-Blog/</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://iochieng1.github.io/My-Blog/resume.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://iochieng1.github.io/My-Blog/articles/aurarisk-weather-resilience.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://iochieng1.github.io/My-Blog/articles/aurarisk-api-hardening.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://iochieng1.github.io/My-Blog/articles/aurarisk-map-popup-xss.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://iochieng1.github.io/My-Blog/articles/flexiride-prometheus-grafana.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://iochieng1.github.io/My-Blog/articles/semakazi-production-audit.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://iochieng1.github.io/My-Blog/articles/clonernews-vanilla-rewrite.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://iochieng1.github.io/My-Blog/articles/flexiride-actuator-security.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://iochieng1.github.io/My-Blog/articles/aurarisk-fail-fast-config.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://iochieng1.github.io/My-Blog/articles/flexiride-ports-healthchecks.html</loc>
+    <lastmod>2026-10-08</lastmod>
+  </url>
+  <url>
+    <loc>https://iochieng1.github.io/My-Blog/articles/flexiride-contract-first.html</loc>
+    <lastmod>2026-10-08</lastmod>
   </url>
 </urlset>

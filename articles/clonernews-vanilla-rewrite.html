@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rebuilding Clonernews without React — Ian Ochieng</title>
+<meta name="description" content="I rebuilt our Hacker News reader in plain HTML, CSS and JavaScript, with a network layer that caches, dedupes, batches and retries politely.">
+<meta name="author" content="Ian Ochieng">
+<link rel="canonical" href="https://iochieng1.github.io/My-Blog/articles/clonernews-vanilla-rewrite.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rebuilding Clonernews without React">
+<meta property="og:description" content="I rebuilt our Hacker News reader in plain HTML, CSS and JavaScript, with a network layer that caches, dedupes, batches and retries politely.">
+<meta property="og:url" content="https://iochieng1.github.io/My-Blog/articles/clonernews-vanilla-rewrite.html">
+<meta property="article:published_time" content="2026-10-06">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#top">Skip to content</a>
+
+<main id="top" class="note" tabindex="-1">
+
+  <p class="note-back"><a href="../#articles">← All articles</a></p>
+
+  <article>
+    <header class="note-head">
+      <p class="hero-kicker">Engineering note · Clonernews</p>
+      <h1>Rebuilding Clonernews without React</h1>
+      <dl class="ledger">
+        <div class="ledger-row"><dt>Project</dt><dd>Clonernews — Internal project, Zone01 Kisumu</dd></div>
+        <div class="ledger-row"><dt>Issue</dt><dd>PR #7: Feat/vanilla js</dd></div>
+        <div class="ledger-row"><dt>My role</dt><dd>Author of PR #7 (rewrite, network layer, utilities)</dd></div>
+        <div class="ledger-row"><dt>Stack</dt><dd>HTML · CSS · JavaScript (ES modules) · Hacker News API</dd></div>
+        <div class="ledger-row"><dt>Status</dt><dd>Merged 6 Oct 2026</dd></div>
+      </dl>
+    </header>
+
+    <section class="note-body">
+      <h2>The problem</h2>
+      <p>Clonernews is a reader for the public Hacker News API: stories, jobs, polls, comments and live updates. My pair partner and I started it as React components (<code>.jsx</code>) with hooks for state. But the repository had no <code>package.json</code>, no <code>index.html</code> and no build tool. Nothing installed React or compiled the JSX, so the app could not run in a browser as it stood.</p>
+
+      <h2>What I did</h2>
+      <p>I removed React in three steps, so each commit stayed small enough to review.</p>
+      <ul>
+        <li>I replaced each component with a plain function that returns DOM elements, built with a small <code>h()</code> helper. Inline styles moved into CSS classes.</li>
+        <li>I renamed <code>hooks/</code> to <code>state/</code> and rewrote the store and the debounce and throttle helpers without React.</li>
+        <li>I rebuilt the app as <code>index.html</code>, <code>css/style.css</code> and seven ES modules in <code>js/</code>. There is no build step; any static server works.</li>
+      </ul>
+      <p>The API sends one request per item, so a feed page means many requests. I wrote <code>js/api.js</code> to keep that load low:</p>
+      <ul>
+        <li>An item cache with a 3,000-entry limit, evicting the least recently used. Feed id lists are cached for 30 seconds.</li>
+        <li>In-flight dedupe: identical requests share one promise.</li>
+        <li><code>getItems()</code> fetches with at most 8 requests at a time and keeps the input order. A failed item comes back as <code>null</code>; it only throws if every request failed.</li>
+        <li>Retries with exponential backoff and jitter, after an 8-second timeout. Only network errors, 429 and 5xx are retried, since other 4xx errors will not fix themselves.</li>
+      </ul>
+      <p>Live data polls every 5 seconds. It stops while the tab is hidden and refreshes as soon as the tab is visible again. Job postings change rarely, so they are checked every sixth tick. Items reported as changed are dropped from the cache.</p>
+      <p>In <code>js/utils.js</code>, <code>debounce</code> waits for a pause, which suits the filter box (250&nbsp;ms). <code>throttle</code> runs at once, then at most once per interval, and still runs the last call so the final event is not lost:</p>
+      <pre><code>if (remaining &lt;= 0) { clearTimeout(timer); run(); }
+else if (!timer) { timer = setTimeout(run, remaining); }</code></pre>
+      <p>It limits infinite loading (800&nbsp;ms) and the back-to-top scroll handler (150&nbsp;ms).</p>
+
+      <h2>How I checked it</h2>
+      <p>The project has no automated tests, so I checked the design against the code and the API.</p>
+      <ul>
+        <li>The old tree had no <code>package.json</code> or <code>index.html</code>. That confirmed the React version had no way to run.</li>
+        <li>I made the retry rule explicit in <code>isRetryable()</code>, so a 404 fails at once instead of retrying three times.</li>
+        <li>Polling checks <code>document.hidden</code> both before a request and before scheduling the next one, so a hidden tab does not keep a timer going.</li>
+        <li>My pair partner's next two PRs (#8 and #9) built on the rewrite. They changed the feed, live and render modules but did not need to touch <code>api.js</code> or <code>utils.js</code>.</li>
+      </ul>
+
+      <h2>What I learned</h2>
+      <p>A framework is not free. Without a build set-up, React only added code that could not run. For a small reader, plain modules and a DOM helper were enough. The work that mattered most was the network layer. Being polite to a shared public API comes down to a few rules: cache, share requests, limit concurrency, back off and stop when nobody is looking.</p>
+    </section>
+
+    <footer class="note-foot">
+      <p>Clonernews lives on Zone01 Kisumu's private Git server, so the code isn't public.</p>
+      <p><a href="../#articles">← All articles</a></p>
+    </footer>
+  </article>
+
+</main>
+
+</body>
+</html>

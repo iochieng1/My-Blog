@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ian Ochieng — Resume</title>
+<meta name="description" content="Resume of Ian Ochieng, full-stack and backend developer in Kisumu, Kenya.">
+<meta name="author" content="Ian Ochieng">
+<link rel="canonical" href="https://iochieng1.github.io/My-Blog/resume.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="resume.css">
+</head>
+<body>
+
+<nav class="toolbar" aria-label="Resume actions">
+  <a href="./">← Back to portfolio</a>
+  <a class="toolbar-cta" href="resume.pdf" download>Download PDF</a>
+</nav>
+
+<main class="sheet">
+
+  <header class="cv-head">
+    <div>
+      <h1>Ian Ochieng</h1>
+      <p class="cv-role">Full-Stack &amp; Backend Developer</p>
+    </div>
+    <ul class="cv-contact">
+      <li>Kisumu, Kenya</li>
+      <li><a href="mailto:ochieng1044@gmail.com">ochieng1044@gmail.com</a></li>
+      <li><a href="https://www.linkedin.com/in/ian-ochieng/">linkedin.com/in/ian-ochieng</a></li>
+      <li><a href="https://github.com/iochieng1">github.com/iochieng1</a></li>
+      <li><a href="https://dev.to/iochieng1">dev.to/iochieng1</a></li>
+      <li><a href="https://iochieng1.github.io/My-Blog/">iochieng1.github.io/My-Blog</a></li>
+    </ul>
+  </header>
+
+  <section>
+    <h2>Profile</h2>
+    <p>
+      Full-stack and backend developer working in JavaScript, Node.js, Go,
+      SQL and Docker. I build software for specific business problems,
+      from internal tools backed by a database to production platforms
+      for client businesses. I'm currently a software development
+      apprentice at Zone01 Kisumu, and I bring a background in Public
+      Administration and Sociology to how I scope what a system needs to do.
+    </p>
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <dl class="cv-skills">
+      <div><dt>Languages</dt><dd>Go, JavaScript, Java, SQL, Solidity, HTML5/CSS3</dd></div>
+      <div><dt>Frameworks</dt><dd>Node.js, Express.js, Spring Boot, React, React Native/Expo</dd></div>
+      <div><dt>Infrastructure</dt><dd>Docker, Linux, GitHub Actions, Prometheus, Grafana, SQLite</dd></div>
+      <div><dt>Tools</dt><dd>Git &amp; GitHub, gRPC, OpenAPI, Hardhat</dd></div>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+
+    <article class="cv-item">
+      <div class="cv-item-head">
+        <h3>Software Development Apprentice — Zone01 Kisumu</h3>
+        <span>Mar 2026 – Present</span>
+      </div>
+      <p class="cv-sub">Project-based, peer-driven apprenticeship (training programme)</p>
+      <ul>
+        <li>Backend contributor on Flexi-Ride, a team-built ride-hailing platform of 13 Java/Spring Boot microservices. I standardised the Docker builds, defined gRPC and OpenAPI contracts, locked down Actuator management endpoints, and set up Prometheus and Grafana monitoring.</li>
+        <li>Built DawaTrace, a pharmaceutical-verification prototype on Solidity smart contracts, at a Zone01 hackathon.</li>
+        <li>Built Clonernews (pair project), a Hacker News reader with live updates, request caching and retry with backoff, in plain JavaScript.</li>
+        <li>Team member on Sortable, a searchable, paginated data table with unit-aware sorting.</li>
+        <li>Wrote go-reloaded, a Go command-line text-transformation pipeline.</li>
+      </ul>
+    </article>
+
+    <article class="cv-item">
+      <div class="cv-item-head">
+        <h3>Freelance Software Developer</h3>
+        <span>Ongoing</span>
+      </div>
+      <p class="cv-sub">Self-employed · Client work</p>
+      <ul>
+        <li>Built the production website, SEO and backend services for Ben's Tailoring, a Qatar-based tailoring business, as sole developer.</li>
+        <li>Built Duka Ledger, an installment-payment tracker for small shop owners (Node.js, Express, SQLite).</li>
+      </ul>
+    </article>
+  </section>
+
+  <section>
+    <h2>Personal projects</h2>
+
+    <article class="cv-item">
+      <div class="cv-item-head">
+        <h3>SemaKazi</h3>
+        <span>Node.js · Express · SQLite · JWT</span>
+      </div>
+      <ul>
+        <li>Skills-verification and reputation platform for Kenya's informal-sector workers, built on three trust signals: photo proof of jobs, client ratings and peer-endorsed skill badges.</li>
+        <li>Scoped the MVP in a written PRD. Registration, search, profiles with reviews and the worker dashboard work end to end.</li>
+      </ul>
+    </article>
+
+    <article class="cv-item">
+      <div class="cv-item-head">
+        <h3>Duka POS</h3>
+        <span>Node.js · Express · EJS · SQLite</span>
+      </div>
+      <ul>
+        <li>Offline point-of-sale and inventory system for small shops, with owner and cashier roles, barcode scanning, receipts, low-stock alerts and multi-shop support.</li>
+        <li>Stock is deducted atomically at checkout to prevent overselling. Covered by a 20-test suite.</li>
+      </ul>
+    </article>
+
+    <article class="cv-item">
+      <div class="cv-item-head">
+        <h3>AuraRisk</h3>
+        <span>Go · PostgreSQL · React · Expo</span>
+      </div>
+      <ul>
+        <li>Climate-risk platform with localised flood risk scores, early warnings and community reports, on web and mobile.</li>
+        <li>Removed default credentials and made production fail fast on unsafe config. Added caching, retries, a circuit breaker and stale-data fallback for the weather API, plus rate limits, request IDs and graceful shutdown.</li>
+      </ul>
+    </article>
+  </section>
+
+  <section>
+    <h2>Writing</h2>
+    <p>Technical articles on <a href="https://dev.to/iochieng1">Dev.to</a>, including a three-part series on building SemaKazi and posts on Docker multi-stage builds and debugging Expo on Linux. Engineering notes on my portfolio cover security, reliability and observability work on Flexi-Ride, AuraRisk, SemaKazi and Clonernews.</p>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <article class="cv-item">
+      <div class="cv-item-head">
+        <h3>Software Development Apprenticeship — Zone01 Kisumu</h3>
+        <span>Mar 2026 – Present</span>
+      </div>
+    </article>
+    <article class="cv-item">
+      <div class="cv-item-head">
+        <h3>B.A. Public Administration, major in Sociology</h3>
+        <span>University of Nairobi</span>
+      </div>
+    </article>
+  </section>
+
+</main>
+
+</body>
+</html>

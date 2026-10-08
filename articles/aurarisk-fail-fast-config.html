@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Removing default credentials and failing fast — Ian Ochieng</title>
+<meta name="description" content="I removed the fallback database URL and dev passwords from AuraRisk, made production startup refuse unsafe config, and added file and AWS Secrets Manager support.">
+<meta name="author" content="Ian Ochieng">
+<link rel="canonical" href="https://iochieng1.github.io/My-Blog/articles/aurarisk-fail-fast-config.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Removing default credentials and failing fast">
+<meta property="og:description" content="I removed the fallback database URL and dev passwords from AuraRisk, made production startup refuse unsafe config, and added file and AWS Secrets Manager support.">
+<meta property="og:url" content="https://iochieng1.github.io/My-Blog/articles/aurarisk-fail-fast-config.html">
+<meta property="article:published_time" content="2026-10-05">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#top">Skip to content</a>
+
+<main id="top" class="note" tabindex="-1">
+
+  <p class="note-back"><a href="../#articles">← All articles</a></p>
+
+  <article>
+    <header class="note-head">
+      <p class="hero-kicker">Engineering note · AuraRisk</p>
+      <h1>Removing default credentials and failing fast</h1>
+      <dl class="ledger">
+        <div class="ledger-row"><dt>Project</dt><dd>AuraRisk — Personal project</dd></div>
+        <div class="ledger-row"><dt>Issue</dt><dd>#15 Remove hardcoded credentials and enforce fail-fast config</dd></div>
+        <div class="ledger-row"><dt>My role</dt><dd>Author of PR #35</dd></div>
+        <div class="ledger-row"><dt>Stack</dt><dd>Go · Docker Compose · AWS Secrets Manager</dd></div>
+        <div class="ledger-row"><dt>Status</dt><dd>Merged 5 Oct 2026</dd></div>
+      </dl>
+    </header>
+
+    <section class="note-body">
+      <h2>The problem</h2>
+      <p>AuraRisk's <code>docker-compose.yml</code> had development passwords written into it. Postgres used <code>password</code>, and the object store used a fixed access key and secret. The Go backend also had a fallback database URL. If <code>DATABASE_URL</code> was missing, it quietly connected with <code>postgres:password</code> on localhost.</p>
+      <p>That is convenient on a laptop, but it is the wrong default for a deploy. A missing setting would not stop the service. It would start with credentials anyone can read in the repo. My architecture doc listed this as a launch blocker.</p>
+
+      <h2>What I did</h2>
+      <p>I made configuration explicit and checked it once, at startup, before anything else runs.</p>
+      <ul>
+        <li><strong>No fallback DSN.</strong> The backend now exits if <code>DATABASE_URL</code> is not set.</li>
+        <li><strong>Compose reads from <code>.env</code>.</strong> Credentials come from the repo-root <code>.env</code>, using the <code>${VAR:?message}</code> form so Compose refuses to start when one is missing. <code>.env.example</code> now uses <code>change-me-*</code> placeholders.</li>
+        <li><strong>An explicit environment.</strong> A new <code>APP_ENV</code> is <code>development</code> by default or <code>production</code>. Any other value aborts startup, so a typo cannot skip the production checks.</li>
+        <li><strong>Production refuses dev values.</strong> In production, startup fails if the database password or any other secret is a known dev value or starts with <code>change-me</code>. It also fails if <code>EXPO_ACCESS_TOKEN</code> is empty while the push notifier is enabled.</li>
+        <li><strong>All problems at once.</strong> <code>Validate()</code> collects every problem and reports them together, so I don't fix one and restart only to hit the next.</li>
+        <li><strong>Secret sources.</strong> Each secret can be a plain value, a mounted file via <code>KEY_FILE</code>, or an AWS Secrets Manager reference. Files are resolved first, so AWS credentials can come from a file. The AWS client is only created when a reference is actually present.</li>
+      </ul>
+      <p>A Secrets Manager reference looks like this, with an optional JSON field after the <code>#</code>:</p>
+      <pre><code>DATABASE_URL=awssm://prod/aurarisk#dsn
+EXPO_ACCESS_TOKEN_FILE=/run/secrets/expo_token</code></pre>
+      <p>Setting both <code>KEY</code> and <code>KEY_FILE</code> is an error, rather than one silently winning.</p>
+
+      <h2>How I checked it</h2>
+      <p>I added unit tests in <code>config/config_test.go</code>. They cover reading secrets from files, rejecting a value and a file together, resolving Secrets Manager references through a fake fetcher, not creating the fetcher when there are no references, and a missing JSON field. Other tests check that <code>DATABASE_URL</code> is required, that development accepts local credentials, that production rejects them (including key=value DSNs), and that unknown <code>APP_ENV</code> values fail.</p>
+      <p>I also ran it by hand. The binary exits with a clear error when <code>DATABASE_URL</code> is unset. With <code>APP_ENV=production</code> and the example <code>.env</code>, it lists every dev-credential problem. <code>docker compose config</code> errors when <code>POSTGRES_PASSWORD</code> is missing. <code>go vet</code> and <code>go test</code> pass.</p>
+
+      <h2>What I learned</h2>
+      <p>A fallback value is a decision made on behalf of a future deploy. For credentials, the safer choice is to stop and explain. Reporting every problem in one message made that strictness much less annoying to live with.</p>
+      <p>The change also had costs I had to write down. <code>EXPO_ACCESS_TOKEN</code> is now required in production while the notifier runs. Existing local Postgres volumes keep their original password, because Postgres only applies it when the volume is first created. I documented both in the README rather than leaving them to be discovered.</p>
+    </section>
+
+    <footer class="note-foot">
+      <p><a href="https://github.com/iochieng1/Aura-Risk/pull/35" target="_blank" rel="noopener noreferrer">Pull request #35 on GitHub<span class="sr-only"> (opens in a new tab)</span></a></p>
+      <p><a href="../#articles">← All articles</a></p>
+    </footer>
+  </article>
+
+</main>
+
+</body>
+</html>

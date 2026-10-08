@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One port per job — Ian Ochieng</title>
+<meta name="description" content="Giving 13 Flexi-Ride services unique gRPC ports, keeping HTTP and gRPC ports apart, and making docker-compose health checks probe the right port.">
+<meta name="author" content="Ian Ochieng">
+<link rel="canonical" href="https://iochieng1.github.io/My-Blog/articles/flexiride-ports-healthchecks.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="One port per job">
+<meta property="og:description" content="Giving 13 Flexi-Ride services unique gRPC ports, keeping HTTP and gRPC ports apart, and making docker-compose health checks probe the right port.">
+<meta property="og:url" content="https://iochieng1.github.io/My-Blog/articles/flexiride-ports-healthchecks.html">
+<meta property="article:published_time" content="2026-09-16">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#top">Skip to content</a>
+
+<main id="top" class="note" tabindex="-1">
+
+  <p class="note-back"><a href="../#articles">← All articles</a></p>
+
+  <article>
+    <header class="note-head">
+      <p class="hero-kicker">Engineering note · Flexi-Ride</p>
+      <h1>One port per job</h1>
+      <dl class="ledger">
+        <div class="ledger-row"><dt>Project</dt><dd>Flexi-Ride — Internal project, Zone01 Kisumu</dd></div>
+        <div class="ledger-row"><dt>Issue</dt><dd>#58 HYG-005: Add gRPC server port config to all services; #50 HYG-003: Fix docker-compose health check URLs</dd></div>
+        <div class="ledger-row"><dt>My role</dt><dd>Author of PRs #127 and #108</dd></div>
+        <div class="ledger-row"><dt>Stack</dt><dd>Spring Boot · gRPC · Docker Compose</dd></div>
+        <div class="ledger-row"><dt>Status</dt><dd>Merged 7 Sep and 16 Sep 2026</dd></div>
+      </dl>
+    </header>
+
+    <section class="note-body">
+      <h2>The problem</h2>
+      <p>Each Flexi-Ride service runs two servers: an embedded HTTP server for REST and Actuator, and a gRPC server for calls between services. Both need a port, and they are set separately. <code>server.port</code> is the HTTP port. <code>grpc.server.port</code> is the gRPC port.</p>
+      <p>When I picked up HYG-005, only auth (<code>50051</code>) and email (<code>50053</code>) had a gRPC port configured. The other 11 services had none. With 13 services calling each other, every one needed its own fixed port that the others could rely on.</p>
+      <p>HYG-003 was the Docker side. The issue said every health check in <code>docker-compose.yml</code> used <code>http://localhost:8080/actuator/health</code>, whatever the service's real port was. By the time I worked on it, the backend services had already been given their own ports. The two BFF gateways had not. Both still ran on <code>8080</code> inside the container, mapped to <code>8000</code> and <code>8001</code> on the host.</p>
+
+      <h2>What I did</h2>
+      <p>For HYG-005 (PR #127), I added <code>grpc.server.port</code> to the 11 services that were missing it, following the port map in the issue. The full map is:</p>
+      <ul>
+        <li>auth <code>50051</code>, user <code>50052</code>, email <code>50053</code>, booking <code>50054</code>, driver <code>50055</code></li>
+        <li>leads <code>50056</code>, matching <code>50057</code>, notification <code>50058</code>, payment <code>50059</code></li>
+        <li>sacco <code>50060</code>, analytics <code>50061</code>, audits <code>50062</code>, tracking <code>50063</code></li>
+      </ul>
+      <p>The backend HTTP ports sit in the <code>8080</code>&ndash;<code>8099</code> range, so the two kinds of port never overlap. I added <code>services/GRPC_PORTS.md</code> with the full map, so the next person doesn't have to read 13 properties files to find a port.</p>
+      <p>For HYG-003 (PR #108), I changed the two gateways so the internal port, the published port and the health-check URL all use the same number:</p>
+      <pre><code>environment:
+  - SERVER_PORT=8000
+ports:
+  - "8000:8000"
+healthcheck:
+  test: ["CMD", "curl", "-f", "http://localhost:8000/actuator/health"]</code></pre>
+      <p>Mobile BFF got the same change with <code>8001</code>.</p>
+
+      <h2>How I checked it</h2>
+      <p>For the gRPC ports, I built the services with Maven 3.9.6 and JDK 21 and started all 13 locally. I then probed each gRPC port with a TCP socket check, and confirmed that no gRPC listener collided with an HTTP server. A reviewer approved the PR after confirming every service had a unique gRPC port.</p>
+      <p>For the health checks, I ran the stack and checked <code>docker compose ps</code>. All 15 containers reported healthy. While doing this I also saw that Docker Compose v2 warns about the obsolete top-level <code>version: '3.8'</code>. It is harmless, and I noted it in the PR.</p>
+
+      <h2>What I learned</h2>
+      <p>The gateway health checks were not actually broken. They probed <code>8080</code> and the gateways listened on <code>8080</code>. The problem was that the same service had a different port depending on where you looked: <code>8000</code> from the host and <code>8080</code> inside the container. One number per service, used everywhere, is easier to check by eye. That paid off later. When I wrote the Prometheus targets for these services, each target was just the service name and the one port it uses everywhere.</p>
+    </section>
+
+    <footer class="note-foot">
+      <p>Flexi-Ride is a private Zone01 Kisumu team repository, so the code isn't public.</p>
+      <p><a href="../#articles">← All articles</a></p>
+    </footer>
+  </article>
+
+</main>
+
+</body>
+</html>
