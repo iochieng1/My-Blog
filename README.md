@@ -64,7 +64,7 @@ Then open http://localhost:8000. You can also open `index.html` directly in a br
 After editing `resume.html`, serve the site locally (see above), then run:
 
 ```bash
-chromium --headless --no-pdf-header-footer --print-to-pdf="$PWD/resume.pdf" http://localhost:8000/resume.html
+chromium --headless --no-pdf-header-footer --virtual-time-budget=8000 --print-to-pdf="$PWD/resume.pdf" http://localhost:8000/resume.html
 ```
 
 ## Checking the HTML
@@ -88,6 +88,7 @@ npx html-validate index.html 404.html resume.html articles/*.html
 - GitHub: https://github.com/iochieng1
 - LinkedIn: https://www.linkedin.com/in/ian-ochieng/
 - Dev.to: https://dev.to/iochieng1
+- X: https://x.com/OchiengIyan
 
 ## License
 
