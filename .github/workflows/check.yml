@@ -18,5 +18,15 @@ jobs:
         uses: lycheeverse/lychee-action@v2
         with:
           # LinkedIn and X block automated requests, so they would always fail.
-          args: --no-progress --exclude 'linkedin\.com' --exclude 'x\.com' index.html 404.html resume.html 'articles/*.html' README.md
+          # The site's own URLs (canonical links) only exist after deploy, and
+          # local links are checked as files. 404.html uses /My-Blog/ paths
+          # that only resolve on GitHub Pages, so it's validated but not
+          # link-checked.
+          args: >-
+            --no-progress
+            --exclude 'linkedin\.com'
+            --exclude 'x\.com'
+            --exclude 'iochieng1\.github\.io/My-Blog'
+            --exclude 'localhost'
+            index.html resume.html 'articles/*.html' README.md
           fail: true
