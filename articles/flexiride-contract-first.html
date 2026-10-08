@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing the contract first — Ian Ochieng</title>
+<meta name="description" content="Defining gRPC and OpenAPI contracts for the Flexi-Ride Auth and User services before anyone wrote the implementation.">
+<meta name="author" content="Ian Ochieng">
+<link rel="canonical" href="https://iochieng1.github.io/My-Blog/articles/flexiride-contract-first.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Writing the contract first">
+<meta property="og:description" content="Defining gRPC and OpenAPI contracts for the Flexi-Ride Auth and User services before anyone wrote the implementation.">
+<meta property="og:url" content="https://iochieng1.github.io/My-Blog/articles/flexiride-contract-first.html">
+<meta property="article:published_time" content="2026-08-13">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#top">Skip to content</a>
+
+<main id="top" class="note" tabindex="-1">
+
+  <p class="note-back"><a href="../#articles">← All articles</a></p>
+
+  <article>
+    <header class="note-head">
+      <p class="hero-kicker">Engineering note · Flexi-Ride</p>
+      <h1>Writing the contract first</h1>
+      <dl class="ledger">
+        <div class="ledger-row"><dt>Project</dt><dd>Flexi-Ride — Internal project, Zone01 Kisumu</dd></div>
+        <div class="ledger-row"><dt>Issue</dt><dd>#35 CORE-001 and #38 CORE-004: Define Auth and User gRPC contracts and OpenAPI specs</dd></div>
+        <div class="ledger-row"><dt>My role</dt><dd>Author of PRs #99, #101 and #102</dd></div>
+        <div class="ledger-row"><dt>Stack</dt><dd>gRPC · Protocol Buffers · OpenAPI 3.0</dd></div>
+        <div class="ledger-row"><dt>Status</dt><dd>Merged 4, 10 and 13 Aug 2026</dd></div>
+      </dl>
+    </header>
+
+    <section class="note-body">
+      <h2>The problem</h2>
+      <p>Auth and User are the first services most other Flexi-Ride services depend on. The team wanted their interfaces agreed before anyone wrote the code. Each issue asked for two files: a <code>.proto</code> file for the internal gRPC interface, and an OpenAPI 3.0 spec for the external REST endpoints. The issue notes said it plainly: the proto file is the contract, and implementation follows after approval.</p>
+      <p>The existing <code>auth.proto</code> was an early draft with <code>Login</code> and a <code>ValidateToken</code> that returned a username. The <code>user.proto</code> file was empty.</p>
+
+      <h2>What I did</h2>
+      <p>For Auth (PR #99), I rewrote <code>auth.proto</code> around the three RPCs the issue named: <code>ValidateToken</code>, <code>RefreshToken</code> and <code>GetClaims</code>. Every RPC has a comment listing the error codes it can return.</p>
+      <pre><code>// RefreshToken generates a new access token using a valid refresh token.
+// Possible Error Codes:
+// - UNAUTHENTICATED: The refresh token is invalid or expired.
+// - NOT_FOUND: The associated user session does not exist.
+// - INVALID_ARGUMENT: The request is malformed.
+// - INTERNAL: An unexpected server error occurred.
+rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);</code></pre>
+      <p>I then wrote <code>Docs/specs/auth-api.yaml</code> with matching REST paths under <code>/api/v1/auth</code>:</p>
+      <ul>
+        <li><code>POST /validate</code>, <code>POST /refresh</code> and <code>POST /claims</code>, each with request and response schemas.</li>
+        <li>One shared <code>ErrorResponse</code> schema with an <code>error_code</code> field.</li>
+        <li>Reusable responses that map HTTP <code>400</code>, <code>401</code>, <code>404</code> and <code>500</code> to <code>INVALID_ARGUMENT</code>, <code>UNAUTHENTICATED</code>, <code>NOT_FOUND</code> and <code>INTERNAL</code>.</li>
+      </ul>
+      <p>So the same failure has the same name over gRPC and over REST.</p>
+      <p>For User (PR #101), I defined <code>GetUser</code>, <code>UpdateProfile</code> and <code>GetPreferences</code>, with matching REST endpoints. The issue also asked for <code>PUT /api/v1/users/{id}/preferences</code> and <code>GET /api/v1/users/search</code>, which my first PR did not cover. PR #102 added both, as <code>UpdatePreferences</code> and <code>SearchUsers</code> in the proto and as new paths in the spec. Search takes a <code>query</code> plus <code>limit</code> and <code>offset</code> for paging.</p>
+
+      <h2>How I checked it</h2>
+      <p>For the User contracts, I checked the proto with <code>protoc -I=services/user/proto services/user/proto/user.proto -o /dev/null</code> and the spec with <code>swagger-cli validate</code>. For Auth, the PR gave reviewers a <code>protoc</code> command to run, and a reviewer approved it after checking it.</p>
+      <p>The contract was then used. For CORE-003, a teammate implemented <code>ValidateToken</code>, <code>RefreshToken</code> and <code>GetClaims</code> in the Auth service, and added a roles claim to <code>ValidateTokenResponse</code> along the way.</p>
+
+      <h2>What I learned</h2>
+      <p>A contract is only as good as the code it generates in the project's real language. My protos set <code>go_package</code>, and in the Auth rewrite I removed the old <code>java_package</code> and <code>java_multiple_files</code> options. Flexi-Ride is a Java project. About a month later, a teammate added <code>java_package</code> and <code>java_multiple_files</code> to both files. <code>protoc -o /dev/null</code> only checks syntax. Next time I would run the actual Java code generation as part of checking a contract, so the generated package names are reviewed along with the messages.</p>
+    </section>
+
+    <footer class="note-foot">
+      <p>Flexi-Ride is a private Zone01 Kisumu team repository, so the code isn't public.</p>
+      <p><a href="../#articles">← All articles</a></p>
+    </footer>
+  </article>
+
+</main>
+
+</body>
+</html>

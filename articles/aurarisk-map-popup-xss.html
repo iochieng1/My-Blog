@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fixing stored XSS in AuraRisk's map popups — Ian Ochieng</title>
+<meta name="description" content="Community report notes were inserted into map popups as raw HTML. I built the popups from text nodes instead, upgraded maplibre-gl to v6 and applied npm audit fixes.">
+<meta name="author" content="Ian Ochieng">
+<link rel="canonical" href="https://iochieng1.github.io/My-Blog/articles/aurarisk-map-popup-xss.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fixing stored XSS in AuraRisk's map popups">
+<meta property="og:description" content="Community report notes were inserted into map popups as raw HTML. I built the popups from text nodes instead, upgraded maplibre-gl to v6 and applied npm audit fixes.">
+<meta property="og:url" content="https://iochieng1.github.io/My-Blog/articles/aurarisk-map-popup-xss.html">
+<meta property="article:published_time" content="2026-10-08">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#top">Skip to content</a>
+
+<main id="top" class="note" tabindex="-1">
+
+  <p class="note-back"><a href="../#articles">← All articles</a></p>
+
+  <article>
+    <header class="note-head">
+      <p class="hero-kicker">Engineering note · AuraRisk</p>
+      <h1>Fixing stored XSS in AuraRisk's map popups</h1>
+      <dl class="ledger">
+        <div class="ledger-row"><dt>Project</dt><dd>AuraRisk — Personal project</dd></div>
+        <div class="ledger-row"><dt>Issue</dt><dd>Part of #16 Secure community report creation endpoint, and #26 Implement Automated Tests and CI Pipelines</dd></div>
+        <div class="ledger-row"><dt>My role</dt><dd>Author of PR #45</dd></div>
+        <div class="ledger-row"><dt>Stack</dt><dd>TypeScript · React · Vite · MapLibre GL</dd></div>
+        <div class="ledger-row"><dt>Status</dt><dd>Open, in review</dd></div>
+      </dl>
+    </header>
+
+    <section class="note-body">
+      <h2>The problem</h2>
+      <p>AuraRisk lets people submit community reports about flooding, each with a short free-text note. The web map shows these reports as markers, and each marker opens a popup.</p>
+      <p>The popup was built with MapLibre's <code>Popup.setHTML()</code>, with the user's note placed straight into the HTML string. That is a stored cross-site scripting bug. Whatever markup someone put in a note would be parsed as HTML by the browser of anyone who opened that popup, and markup can carry script.</p>
+      <p>Separately, <code>npm audit</code> flagged a critical advisory in the maplibre-gl version we used (4.7.1), GHSA-jrc7-96c5-q579, a sanitiser bypass. The mobile toolchain also had a critical advisory in <code>shell-quote</code>.</p>
+
+      <h2>What I did</h2>
+      <ul>
+        <li><strong>Popups from DOM nodes.</strong> A small <code>reportPopup()</code> function builds the popup with <code>document.createElement</code> and sets the category and note with <code>textContent</code>. The popup is attached with <code>setDOMContent()</code>. Text set this way is never parsed as markup.</li>
+        <li><strong>Looked for the same pattern elsewhere.</strong> I searched web, mobile and shared code for <code>setHTML</code>, <code>innerHTML</code>, <code>dangerouslySetInnerHTML</code> and similar. I found no other raw-HTML insertion.</li>
+        <li><strong>maplibre-gl 4.7.1 to 6.13.0.</strong> This needed two code changes. v6 has no default export, so the import became <code>import * as maplibregl</code>. And v6 finds its web worker relative to its own module file, which Vite moves, so the map drew no tiles. I import the worker with <code>?url</code> and register it with <code>setWorkerUrl()</code>.</li>
+        <li><strong>Non-breaking audit fixes</strong> in the web and mobile apps, including the <code>shell-quote</code> advisory.</li>
+      </ul>
+      <p>The core of the popup change is short:</p>
+      <pre><code>const note = document.createElement("div");
+note.textContent = r.note;
+box.append(title, note);
+new maplibregl.Popup({ offset: 25 }).setDOMContent(box);</code></pre>
+
+      <h2>How I checked it</h2>
+      <p>The web build passes, and the production <code>npm audit --omit=dev</code> reports 0 vulnerabilities. Mobile <code>tsc</code> and <code>jest</code> pass.</p>
+      <p>For the popup, I ran headless Chromium against both the production build and the dev server. A fake API returned a report whose note contained HTML, including an image tag with an event handler. I checked that the map canvas rendered and tiles loaded, with no console errors, so the worker was loading. The marker rendered and its popup opened. The note appeared as literal text: no element was created from it and its script never ran.</p>
+      <p>Some advisories remain because they need major upgrades. The web app has 7, all in Tailwind 3 build and dev tooling. The mobile app has 58 in the Expo SDK 57, React Native, Metro and Jest toolchain, which needs an Expo SDK 58 upgrade. I listed these in the PR rather than leaving them implied.</p>
+
+      <h2>What I learned</h2>
+      <p>The bug was one template string. Anything a user typed should reach the page as text unless there is a clear reason to treat it as HTML, and a map library's popup is no exception.</p>
+      <p>The upgrade taught me to check behaviour, not just the build. The production build succeeded while leaving out the worker file entirely, and the only symptom was an empty map. One deploy note follows from this: the host must serve <code>.mjs</code> as <code>text/javascript</code>, or browsers will refuse the module worker. The PR is open and in review.</p>
+    </section>
+
+    <footer class="note-foot">
+      <p><a href="https://github.com/iochieng1/Aura-Risk/pull/45" target="_blank" rel="noopener noreferrer">Pull request #45 on GitHub<span class="sr-only"> (opens in a new tab)</span></a></p>
+      <p><a href="../#articles">← All articles</a></p>
+    </footer>
+  </article>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditing my own MVP before production — Ian Ochieng</title>
+<meta name="description" content="I audited SemaKazi before launch, found six risks in config, roles, moderation, dependencies and backups, and ranked them P0 or P1.">
+<meta name="author" content="Ian Ochieng">
+<link rel="canonical" href="https://iochieng1.github.io/My-Blog/articles/semakazi-production-audit.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Auditing my own MVP before production">
+<meta property="og:description" content="I audited SemaKazi before launch, found six risks in config, roles, moderation, dependencies and backups, and ranked them P0 or P1.">
+<meta property="og:url" content="https://iochieng1.github.io/My-Blog/articles/semakazi-production-audit.html">
+<meta property="article:published_time" content="2026-10-06">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#top">Skip to content</a>
+
+<main id="top" class="note" tabindex="-1">
+
+  <p class="note-back"><a href="../#articles">← All articles</a></p>
+
+  <article>
+    <header class="note-head">
+      <p class="hero-kicker">Engineering note · SemaKazi</p>
+      <h1>Auditing my own MVP before production</h1>
+      <dl class="ledger">
+        <div class="ledger-row"><dt>Project</dt><dd>SemaKazi — Personal project</dd></div>
+        <div class="ledger-row"><dt>Issue</dt><dd>#31–#36: pre-production audit findings (2 × P0, 4 × P1)</dd></div>
+        <div class="ledger-row"><dt>My role</dt><dd>Sole developer; wrote the audit and opened the issues</dd></div>
+        <div class="ledger-row"><dt>Stack</dt><dd>Node.js · Express · SQLite</dd></div>
+        <div class="ledger-row"><dt>Status</dt><dd>Open, fixes in progress</dd></div>
+      </dl>
+    </header>
+
+    <section class="note-body">
+      <h2>The problem</h2>
+      <p>SemaKazi helps informal-sector workers in Kenya (fundis) show verified skills and build a reputation through reviews. I built the MVP to run well on a free hosting tier. In August I made the backend seed demo data on every start (PR #28), and gave <code>JWT_SECRET</code> a local fallback (PR #29). Both choices kept development unblocked. Before putting real users on it, I wanted to know which of those shortcuts would be unsafe in production.</p>
+
+      <h2>What I did</h2>
+      <p>I read the backend as if I were reviewing someone else's code. I logged each finding as a GitHub issue with file references and acceptance criteria. I ranked them in two groups. P0 means it must be fixed before launch, because the source is public and the risk needs no special access. P1 means it weakens trust or recovery, and should be fixed before real data builds up.</p>
+      <ul>
+        <li>#31 (P0): <code>seedIfEmpty()</code> runs on every start, so a fresh production database would get demo accounts with documented passwords. The plan is to seed only through an explicit non-production command.</li>
+        <li>#32 (P0): <code>ADMIN_TOKEN</code> falls back to a fixed development value whatever <code>NODE_ENV</code> is. That token guards review moderation, including permanent deletion. The plan is to refuse to start in production without a real token.</li>
+        <li>#33 (P1): some write endpoints check that a token is valid but not the account's role. A fundi could leave a review and a client could add proof of work. The plan is to return 403 for the wrong role.</li>
+        <li>#34 (P1): flagged reviews are hidden on the reviews route, but the profile detail and the search rating averages still include them.</li>
+        <li>#35 (P1): <code>npm audit</code> reports one critical and three moderate advisories in runtime dependencies, with fixes available.</li>
+        <li>#36 (P1): SQLite sits on a persistent disk, but there is no backup or tested restore.</li>
+      </ul>
+      <p>Each issue also asks for a test. For #31, it must prove that an empty production database stays empty. For #32, it must prove the development token is rejected in production.</p>
+
+      <h2>How I checked it</h2>
+      <p>I confirmed each finding against the code or a tool, not from memory.</p>
+      <ul>
+        <li>#31: I traced the call in <code>src/server.js</code> to <code>src/db/seed.js</code> and saw it has no environment check.</li>
+        <li>#32: I compared the two settings in <code>src/config.js</code>. The JWT secret already fails closed; the admin token does not.</li>
+      </ul>
+      <pre><code>if (!jwtSecret &amp;&amp; isProduction) throw new Error(...);  // PR #29
+adminToken: process.env.ADMIN_TOKEN || 'semakazi-local-admin-dev-only'</code></pre>
+      <ul>
+        <li>#33: I read the auth middleware on each <code>POST</code> route in <code>reviews.js</code>, <code>request.js</code> and <code>proofOfWork.js</code>.</li>
+        <li>#34: I compared the SQL. The reviews route filters on <code>flagged = 0</code>; <code>profiles.js</code> does not.</li>
+        <li>#35: I ran <code>npm ci</code> then <code>npm audit</code> in <code>semakazi-backend</code>.</li>
+        <li>#36: I read <code>docs/DEPLOY_RENDER.md</code> and found no backup step.</li>
+      </ul>
+      <p>None of these is fixed yet. Each issue will close only when its acceptance criteria pass, including <code>npm test</code>.</p>
+
+      <h2>What I learned</h2>
+      <p>A development fallback is only safe if production refuses it. I applied that rule to <code>JWT_SECRET</code>, then copied the fallback pattern for the admin token without the check. The audit caught the gap. A convenience that helps on day one, such as auto-seeding, can turn into a risk once the data is real. I now want a short list of production checks before any launch, and each one backed by a test.</p>
+    </section>
+
+    <footer class="note-foot">
+      <p>SemaKazi is public on GitHub. You can follow the audit in the <a href="https://github.com/iochieng1/SemaKazi/issues" target="_blank" rel="noopener noreferrer">issues list<span class="sr-only"> (opens in a new tab)</span></a>.</p>
+      <p><a href="../#articles">← All articles</a></p>
+    </footer>
+  </article>
+
+</main>
+
+</body>
+</html>
