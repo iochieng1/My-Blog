@@ -1,0 +1,22 @@
+name: Check site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate HTML
+        run: npx --yes html-validate@9 index.html 404.html resume.html articles/*.html
+
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # LinkedIn and X block automated requests, so they would always fail.
+          args: --no-progress --exclude 'linkedin\.com' --exclude 'x\.com' --exclude-mail index.html 404.html resume.html 'articles/*.html' README.md
+          fail: true
