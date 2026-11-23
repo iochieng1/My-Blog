@@ -9,15 +9,13 @@ It's a static site: plain HTML and CSS, with no build step, framework or JavaScr
 ## What's on the site
 
 - **About**, with a professional photo
-- **Stack**: languages, frameworks, infrastructure and tools
-- **Experience**: freelance client work and the Zone01 Kisumu apprenticeship
+- **Stack**: languages, frameworks, data & infrastructure, and tools
+- **Experience**: the Zone01 Kisumu apprenticeship and freelance client work
 - **Projects**:
-  - **Personal projects**
-    - SemaKazi, a skills-verification platform for informal-sector workers ([source](https://github.com/iochieng1/SemaKazi))
-    - Duka POS, point of sale and inventory for small shops ([source](https://github.com/iochieng1/duka-pos))
-    - AuraRisk, a flood-risk and early-warning platform ([source](https://github.com/iochieng1/Aura-Risk))
-  - **Internal projects (Zone01 Kisumu)**: Flexi-Ride, DawaTrace, Clonernews, Sortable and [go-reloaded](https://github.com/iochieng1/go-reloaded)
-  - **Client work**: Duka Ledger and Ben's Tailoring
+  - **Featured**: AuraRisk ([source](https://github.com/iochieng1/Aura-Risk)), PayBridge ([source](https://github.com/iochieng1/paybridge)) and Boda Dispatch ([source](https://github.com/iochieng1/boda-dispatch))
+  - **More projects**: Soko Marketplace, SemaKazi and Duka POS
+  - **Internal projects (Zone01 Kisumu)**: Flexi-Ride, Clonernews and Sortable
+  - **Client work**: Ben's Tailoring
 - **Articles**:
   - engineering notes on real issues, in [`articles/`](articles/)
   - posts on [Dev.to](https://dev.to/iochieng1)

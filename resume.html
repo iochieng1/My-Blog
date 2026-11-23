@@ -41,22 +41,25 @@
   <section>
     <h2>Profile</h2>
     <p>
-      Full-stack and backend developer working in JavaScript, Node.js, Go,
-      SQL and Docker. I build software for specific business problems,
-      from internal tools backed by a database to production platforms
-      for client businesses. I'm currently a software development
-      apprentice at Zone01 Kisumu, and I bring a background in Public
-      Administration and Sociology to how I scope what a system needs to do.
+      Full-stack and backend developer working in Go, TypeScript/Node.js,
+      PostgreSQL, Redis and Docker. I build APIs, payment integrations and
+      data-driven platforms for businesses, with a focus on correctness:
+      idempotent payments, atomic stock updates, and services that keep
+      working when a dependency fails. Software development apprentice at
+      Zone01 Kisumu. My degree in Public Administration and Sociology
+      underpins civic-tech projects that target gaps in public service
+      delivery, from bill tracking and public participation to civil
+      registration.
     </p>
   </section>
 
   <section>
     <h2>Skills</h2>
     <dl class="cv-skills">
-      <div><dt>Languages</dt><dd>Go, JavaScript, Java, SQL, Solidity, HTML5/CSS3</dd></div>
-      <div><dt>Frameworks</dt><dd>Node.js, Express.js, Spring Boot, React, React Native/Expo</dd></div>
-      <div><dt>Infrastructure</dt><dd>Docker, Linux, GitHub Actions, Prometheus, Grafana, SQLite</dd></div>
-      <div><dt>Tools</dt><dd>Git &amp; GitHub, gRPC, OpenAPI, Hardhat</dd></div>
+      <div><dt>Languages</dt><dd>Go, TypeScript, JavaScript, SQL, Python, Java, HTML5/CSS3</dd></div>
+      <div><dt>Frameworks</dt><dd>Node.js, Fastify, Express.js, Gin, Next.js/React, React Native/Expo, Spring Boot</dd></div>
+      <div><dt>Data &amp; infra</dt><dd>PostgreSQL, Redis, SQLite, Docker, Linux, GitHub Actions, Prometheus, Grafana</dd></div>
+      <div><dt>Tools &amp; APIs</dt><dd>Git &amp; GitHub, gRPC, OpenAPI, Socket.IO, M-Pesa Daraja, Africa's Talking (SMS/USSD)</dd></div>
     </dl>
   </section>
 
@@ -68,13 +71,11 @@
         <h3>Software Development Apprentice — Zone01 Kisumu</h3>
         <span>Mar 2026 – Present</span>
       </div>
-      <p class="cv-sub">Project-based, peer-driven apprenticeship (training programme)</p>
+      <p class="cv-sub">Project-based, peer-reviewed apprenticeship (training programme)</p>
       <ul>
         <li>Backend contributor on Flexi-Ride, a team-built ride-hailing platform of 13 Java/Spring Boot microservices. I standardised the Docker builds, defined gRPC and OpenAPI contracts, locked down Actuator management endpoints, and set up Prometheus and Grafana monitoring.</li>
-        <li>Built DawaTrace, a pharmaceutical-verification prototype on Solidity smart contracts, at a Zone01 hackathon.</li>
         <li>Built Clonernews (pair project), a Hacker News reader with live updates, request caching and retry with backoff, in plain JavaScript.</li>
         <li>Team member on Sortable, a searchable, paginated data table with unit-aware sorting.</li>
-        <li>Wrote go-reloaded, a Go command-line text-transformation pipeline.</li>
       </ul>
     </article>
 
@@ -85,66 +86,14 @@
       </div>
       <p class="cv-sub">Self-employed · Client work</p>
       <ul>
-        <li>Built the production website, SEO and backend services for Ben's Tailoring, a Qatar-based tailoring business, as sole developer.</li>
-        <li>Built Duka Ledger, an installment-payment tracker for small shop owners (Node.js, Express, SQLite).</li>
+        <li>Work directly with business owners as sole developer, from scoping requirements through design, build, deployment and post-launch support.</li>
+        <li>Built the production website, SEO and backend services for Ben's Tailoring, a Qatar-based tailoring business, including light automation of its operations.</li>
       </ul>
     </article>
   </section>
 
   <section>
-    <h2>Personal projects</h2>
-
-    <article class="cv-item">
-      <div class="cv-item-head">
-        <h3>PayBridge</h3>
-        <span>TypeScript · Fastify · PostgreSQL · Redis</span>
-      </div>
-      <ul>
-        <li>M-Pesa payments gateway API that is rate-limited and idempotent, and built so it can't double-credit. <a href="https://github.com/iochieng1/paybridge">github.com/iochieng1/paybridge</a></li>
-      </ul>
-    </article>
-
-    <article class="cv-item">
-      <div class="cv-item-head">
-        <h3>Soko Marketplace</h3>
-        <span>TypeScript · Next.js · Fastify · PostgreSQL</span>
-      </div>
-      <ul>
-        <li>Headless marketplace for Kenyan sellers with M-Pesa checkout that never oversells, using stock reservations, signed webhooks and a transactional outbox. <a href="https://github.com/iochieng1/soko-marketplace">github.com/iochieng1/soko-marketplace</a></li>
-      </ul>
-    </article>
-
-    <article class="cv-item">
-      <div class="cv-item-head">
-        <h3>Boda Dispatch</h3>
-        <span>TypeScript · Next.js · Fastify · Socket.IO · Redis</span>
-      </div>
-      <ul>
-        <li>Real-time delivery dispatch board with live job sync over WebSockets, offline-first riders and conflict resolution. <a href="https://github.com/iochieng1/boda-dispatch">github.com/iochieng1/boda-dispatch</a></li>
-      </ul>
-    </article>
-
-    <article class="cv-item">
-      <div class="cv-item-head">
-        <h3>SemaKazi</h3>
-        <span>Node.js · Express · SQLite · JWT</span>
-      </div>
-      <ul>
-        <li>Skills-verification and reputation platform for Kenya's informal-sector workers, built on three trust signals: photo proof of jobs, client ratings and peer-endorsed skill badges.</li>
-        <li>Scoped the MVP in a written PRD. Registration, search, profiles with reviews and the worker dashboard work end to end.</li>
-      </ul>
-    </article>
-
-    <article class="cv-item">
-      <div class="cv-item-head">
-        <h3>Duka POS</h3>
-        <span>Node.js · Express · EJS · SQLite</span>
-      </div>
-      <ul>
-        <li>Offline point-of-sale and inventory system for small shops, with owner and cashier roles, barcode scanning, receipts, low-stock alerts and multi-shop support.</li>
-        <li>Stock is deducted atomically at checkout to prevent overselling. Covered by a 20-test suite.</li>
-      </ul>
-    </article>
+    <h2>Projects</h2>
 
     <article class="cv-item">
       <div class="cv-item-head">
@@ -156,11 +105,55 @@
         <li>Removed default credentials and made production fail fast on unsafe config. Added caching, retries, a circuit breaker and stale-data fallback for the weather API, plus rate limits, request IDs and graceful shutdown.</li>
       </ul>
     </article>
+
+    <article class="cv-item">
+      <div class="cv-item-head">
+        <h3>PayBridge</h3>
+        <span>TypeScript · Fastify · PostgreSQL · Redis</span>
+      </div>
+      <ul>
+        <li>M-Pesa payments gateway API that can't double-credit: idempotent STK push, callback deduplication with a forward-only state machine, reconciliation of lost callbacks, and HMAC-signed webhooks. Live on the Daraja sandbox. <a href="https://github.com/iochieng1/paybridge">github.com/iochieng1/paybridge</a></li>
+      </ul>
+    </article>
+
+    <article class="cv-item">
+      <div class="cv-item-head">
+        <h3>Boda Dispatch</h3>
+        <span>TypeScript · Next.js · Fastify · Socket.IO · Redis</span>
+      </div>
+      <ul>
+        <li>Real-time delivery dispatch board (in progress), with versioned jobs for optimistic concurrency and an append-only event log that deduplicates offline rider updates. <a href="https://github.com/iochieng1/boda-dispatch">github.com/iochieng1/boda-dispatch</a></li>
+      </ul>
+    </article>
+
+    <article class="cv-item">
+      <div class="cv-item-head">
+        <h3>Civic tech</h3>
+        <span>Python · Node.js · PostgreSQL · SMS/USSD</span>
+      </div>
+      <ul>
+        <li>Bunge Watch: tracks Kenyan bills and explains them in plain English and Kiswahili, linking citizens to Parliament's comment process.</li>
+        <li>Public Participation Platform: lets residents comment on county bills and budgets by web, SMS or USSD, and records how each submission was considered.</li>
+        <li>Birth &amp; Civil Registration Assistant: document checklists, deadline reminders and appointment booking to reduce repeat trips and queues.</li>
+      </ul>
+    </article>
+
+    <article class="cv-item">
+      <div class="cv-item-head">
+        <h3>Other projects</h3>
+        <span>TypeScript · Node.js · SQLite</span>
+      </div>
+      <ul>
+        <li>Soko Marketplace: headless marketplace with M-Pesa checkout that never oversells, using stock reservations and a transactional outbox.</li>
+        <li>SemaKazi: skills-verification platform for informal-sector workers, built on photo proof of jobs, client ratings and peer-endorsed badges.</li>
+        <li>Duka POS: offline point-of-sale and inventory system with atomic stock deduction and a 20-test suite.</li>
+      </ul>
+    </article>
   </section>
 
   <section>
     <h2>Writing</h2>
-    <p>Technical articles on <a href="https://dev.to/iochieng1">Dev.to</a>, including a three-part series on building SemaKazi and posts on Docker multi-stage builds and debugging Expo on Linux. Engineering notes on my portfolio cover security, reliability and observability work on Flexi-Ride, AuraRisk, SemaKazi and Clonernews.</p>
+    <p>Technical articles on <a href="https://dev.to/iochieng1">Dev.to</a> and engineering notes on my portfolio covering security, reliability and observability work on AuraRisk, Flexi-Ride, SemaKazi and Clonernews.</p>
   </section>
 
   <section>
