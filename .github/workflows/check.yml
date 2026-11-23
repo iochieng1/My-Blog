@@ -19,7 +19,8 @@ jobs:
         with:
           # LinkedIn and X block automated requests, so they would always fail.
           # The site's own URLs (canonical links) only exist after deploy, and
-          # local links are checked as files. 404.html uses /My-Blog/ paths
+          # local links are checked as files. PayBridge's Render demo sleeps
+          # when idle and can time out on the first request. 404.html uses /My-Blog/ paths
           # that only resolve on GitHub Pages, so it's validated but not
           # link-checked.
           args: >-
@@ -28,5 +29,6 @@ jobs:
             --exclude 'x\.com'
             --exclude 'iochieng1\.github\.io/My-Blog'
             --exclude 'localhost'
+            --exclude 'onrender\.com'
             index.html resume.html 'articles/*.html' README.md
           fail: true
